@@ -1,0 +1,3 @@
+class Post < Base
+
+end

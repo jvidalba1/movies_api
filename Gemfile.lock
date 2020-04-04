@@ -48,7 +48,10 @@ GEM
     rack (2.2.2)
     rack-accept (0.4.5)
       rack (>= 0.4)
+    rake (13.0.1)
     ruby2_keywords (0.0.2)
+    sequel (5.31.0)
+    sqlite3 (1.4.2)
     thread_safe (0.3.6)
     tzinfo (1.2.7)
       thread_safe (~> 0.1)
@@ -59,6 +62,9 @@ PLATFORMS
 
 DEPENDENCIES
   grape
+  rake
+  sequel
+  sqlite3
 
 RUBY VERSION
    ruby 2.5.3p105
