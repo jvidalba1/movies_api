@@ -10,6 +10,7 @@ task :create_tables do
       primary_key :id
       String :name
       String :description
+      String :image_url
     end
 
     DB.create_table :days do

@@ -4,6 +4,7 @@ require_relative '../../models/movie.rb'
 module MovieTransactions
   class Create < BaseTransaction
     tee :params
+    step :validate
     step :create_movie
 
     def params(input)
@@ -11,7 +12,11 @@ module MovieTransactions
       @params = input.fetch(:params)
     end
 
-    def create_movie(input)
+    def validate
+
+    end
+
+    def create_movie
       movie = Movie.create(@params)
       Success(movie)
     rescue StandardError => exception
