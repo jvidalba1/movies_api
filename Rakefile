@@ -14,11 +14,9 @@ task :create_tables do
     end
 
     DB.create_table :days do
-      Integer :id
+      primary_key :id
       foreign_key :movie_id, :movies
       String :day
-
-      primary_key [:id, :movie_id], name: :days_pk
     end
 
     DB.create_table :reservations do

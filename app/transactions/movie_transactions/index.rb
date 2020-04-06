@@ -13,7 +13,6 @@ module MovieTransactions
 
     def get_movies(input)
       movies = Movie.by_day(@day)
-      raise TypeError, "Something went wrong!"
       Success(movies)
     rescue StandardError => exception
       Failure(error: exception)
