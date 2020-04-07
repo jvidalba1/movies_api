@@ -1,6 +1,3 @@
-require_relative '../base_transaction.rb'
-require_relative '../../models/movie.rb'
-
 module MovieTransactions
   class Index < BaseTransaction
     tee :get_day

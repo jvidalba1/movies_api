@@ -1,9 +1,4 @@
 require_relative '../base_transaction.rb'
-require_relative '../../models/movie.rb'
-require_relative '../../models/day.rb'
-require_relative '../../models/show.rb'
-require_relative '../../models/reservation.rb'
-require_relative '../../errors/validation_error.rb'
 
 module ReservationTransactions
   class Index < BaseTransaction

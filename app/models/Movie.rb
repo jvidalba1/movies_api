@@ -1,8 +1,5 @@
-require_relative 'day.rb'
-
-DB = Sequel.connect('sqlite://db/movies.db')
-
 class Movie < Sequel::Model
+  extend Base
   one_to_many :shows
   many_to_many :days, join_table: :shows
 

@@ -16,6 +16,12 @@ module ReservationSerializer
   end
 
   def error_message(failure)
-    { error: failure[:error].message }
+    if (failure[:error].class == Sequel::ValidationFailed || failure[:error].class == ParamsError)
+      { errors: failure[:error].message.split(", "), code: 400 }
+    elsif failure[:error].class == NotFoundError
+      { errors: failure[:error].message.split(", "), code: 404 }
+    else
+      { errors: "Internal server error.", code: 500 }
+    end
   end
 end

@@ -1,10 +1,3 @@
-require_relative '../base_transaction.rb'
-require_relative '../../models/movie.rb'
-require_relative '../../models/day.rb'
-require_relative '../../models/show.rb'
-require_relative '../../models/reservation.rb'
-require_relative '../../errors/validation_error.rb'
-
 module ReservationTransactions
   class Create < BaseTransaction
     tee :params
@@ -26,20 +19,19 @@ module ReservationTransactions
       if @movie
         Success(@movie)
       else
-        raise ValidationError.new("movie not found")
+        raise NotFoundError.new("Movie not found.")
       end
     rescue StandardError => exception
       Failure(error: exception)
     end
 
     def validate_day
-
       @day = Day.where(name: @day_str).first
 
       if @day.movies.include?(@movie)
         Success(@movie)
       else
-        raise ValidationError.new("This movie is presented on --")
+        raise ParamsError.new("The movie is presented on #{days_for_movie}")
       end
 
     rescue StandardError => exception
@@ -52,7 +44,7 @@ module ReservationTransactions
       if @show
         Success(@show)
       else
-        raise ValidationError.new("show not found")
+        raise NotFoundError.new("Movie or days not found.")
       end
     rescue StandardError => exception
       Failure(error: exception)
@@ -66,6 +58,12 @@ module ReservationTransactions
       end
     rescue StandardError => exception
       Failure(error: exception)
+    end
+
+    private
+
+    def days_for_movie
+      @movie.days.map(&:name).join('- ')
     end
   end
 end

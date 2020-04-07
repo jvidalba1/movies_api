@@ -1,7 +1,11 @@
 require 'grape'
+require 'sequel'
+require 'dry-transaction'
+require 'byebug'
 
 # Load files from the models and api folders
-Dir["#{File.dirname(__FILE__)}/app/api/*.rb"].each { |f| require f }
+# byebug
+Dir["#{File.dirname(__FILE__)}/app/**/*.rb"].each { |f| require f }
 
 # Grape API class. We will inherit from it in our future controllers.
 module MoviesApi
@@ -11,11 +15,6 @@ module MoviesApi
 
     mount MoviesApi::Movie
     mount MoviesApi::Reservation
-
-    # Simple endpoint to get the current status of our API.
-    get :status do
-      { status: 'ok' }
-    end
   end
 end
 

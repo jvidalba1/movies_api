@@ -1,8 +1,6 @@
-require_relative 'day.rb'
-
-DB = Sequel.connect('sqlite://db/movies.db')
-
 class Reservation < Sequel::Model
+  extend Base
+
   many_to_one :show
 
   def validate

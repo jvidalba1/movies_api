@@ -1,5 +1,4 @@
 require 'sequel'
-# task default: %w[test]
 
 desc "create all tables"
 task :create_tables do

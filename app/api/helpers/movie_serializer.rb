@@ -22,13 +22,12 @@ module MovieSerializer
   end
 
   def error_message(failure)
-    if failure[:error].class == Sequel::ValidationFailed
+    if (failure[:error].class == Sequel::ValidationFailed || failure[:error].class == ParamsError)
       { errors: failure[:error].message.split(", "), code: 400 }
-    elsif failure[:error].class == ParamsError
-      byebug
-      { errors: failure[:error].message.split(", "), code: 400 }
+    elsif failure[:error].class == NotFoundError
+      { errors: failure[:error].message.split(", "), code: 404 }
     else
-      { errors: "error", code: 500 }
+      { errors: "Internal server error.", code: 500 }
     end
   end
 end

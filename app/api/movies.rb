@@ -1,7 +1,3 @@
-require 'sequel'
-require 'byebug'
-require_relative '../transactions/movie_transactions/index.rb'
-require_relative '../transactions/movie_transactions/create.rb'
 require_relative 'helpers/movie_serializer.rb'
 
 module MoviesApi
@@ -25,8 +21,8 @@ module MoviesApi
             serialize_movie(result)
           end
           m.failure do |failure|
-            obj = error_message(failure)
-            error! obj[:errors], obj[:code]
+            error = error_message(failure)
+            error! error[:errors], error[:code]
           end
         end
       end
@@ -41,7 +37,8 @@ module MoviesApi
             serialize_list(result)
           end
           m.failure do |failure|
-            error_message(failure)
+            error = error_message(failure)
+            error! error[:errors], error[:code]
           end
         end
       end
