@@ -1,16 +1,23 @@
 require_relative '../base_transaction.rb'
 require_relative '../../models/movie.rb'
 require_relative '../../models/day.rb'
+require_relative '../../errors/params_error.rb'
 
 module MovieTransactions
   class Create < BaseTransaction
-    tee :params
+    step :params
     step :create_movie
     step :find_or_create_days
 
     def params(input)
       @days = input.fetch(:params).delete(:days).map(&:downcase)
       @params = input.fetch(:params)
+
+      raise ParamsError.new("days not sent") if @days.empty?
+
+      Success(input)
+    rescue StandardError => exception
+      Failure(error: exception)
     end
 
     def create_movie
@@ -18,8 +25,6 @@ module MovieTransactions
 
       if @movie.save
         Success(@movie)
-      else
-        raise ValidationError(movie.errors)
       end
     rescue StandardError => exception
       Failure(error: exception)

@@ -22,6 +22,13 @@ module MovieSerializer
   end
 
   def error_message(failure)
-    { error: failure[:error].message }
+    if failure[:error].class == Sequel::ValidationFailed
+      { errors: failure[:error].message.split(", "), code: 400 }
+    elsif failure[:error].class == ParamsError
+      byebug
+      { errors: failure[:error].message.split(", "), code: 400 }
+    else
+      { errors: "error", code: 500 }
+    end
   end
 end

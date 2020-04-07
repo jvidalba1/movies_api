@@ -9,7 +9,6 @@ class Reservation < Sequel::Model
     super
     errors.add(:date, "can't be empty") if date.blank?
     errors.add(:date, "this movie is full") if self.show.reservations.count > 10
-    byebug
   end
 
   dataset_module do

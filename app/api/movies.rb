@@ -25,7 +25,8 @@ module MoviesApi
             serialize_movie(result)
           end
           m.failure do |failure|
-            error_message(failure)
+            obj = error_message(failure)
+            error! obj[:errors], obj[:code]
           end
         end
       end
