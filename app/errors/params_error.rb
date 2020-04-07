@@ -1,4 +1,4 @@
-class ParamsError < StandardError
+class ParamsError < BaseError
   attr_accessor :params
 
   def initialize(params)

@@ -9,6 +9,8 @@ module MovieTransactions
     end
 
     def get_movies(input)
+      raise ParamsError.new("day not sent") if @day.blank?
+
       movies = Movie.by_day(@day)
 
       Success(movies)

@@ -23,7 +23,7 @@ module MovieTransactions
       raise ParamsError.new("days not sent") if @days.empty?
 
       @days.each do |str_day|
-        day = Day.where(name: str_day).first || Day.create(name: str_day) #refactor
+        day = Day.where(name: str_day).first || Day.create(name: str_day)
         @movie.add_day(day)
       end
 
