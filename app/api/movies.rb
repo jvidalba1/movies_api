@@ -5,7 +5,7 @@ require_relative '../transactions/movie_transactions/create.rb'
 require_relative 'helpers/movie_serializer.rb'
 
 module MoviesApi
-  class Ping < Grape::API
+  class Movie < Grape::API
     extend MovieTransactions
 
     helpers MovieSerializer
@@ -14,7 +14,7 @@ module MoviesApi
 
       desc 'Create a movie'
       params do
-        requires :name, type: String
+        requires :title, type: String
         requires :description, type: String
         optional :image_url, type: String
         requires :days, type: Array[String]

@@ -8,11 +8,12 @@ module MovieTransactions
 
     def get_day(input)
       params = input.fetch(:params)
-      @day = params[:day]
+      @day = params[:day].downcase
     end
 
     def get_movies(input)
       movies = Movie.by_day(@day)
+
       Success(movies)
     rescue StandardError => exception
       Failure(error: exception)

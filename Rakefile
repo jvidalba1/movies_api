@@ -8,20 +8,25 @@ task :create_tables do
   begin
     DB.create_table :movies do
       primary_key :id
-      String :name
+      String :title
       String :description
       String :image_url
     end
 
     DB.create_table :days do
       primary_key :id
+      String :name
+    end
+
+    DB.create_table :shows do
+      primary_key :id
       foreign_key :movie_id, :movies
-      String :day
+      foreign_key :day_id, :days
     end
 
     DB.create_table :reservations do
       primary_key :id
-      foreign_key :day_id, :days
+      foreign_key :show_id, :shows
       Date :date
     end
     puts "tables created"
@@ -36,9 +41,8 @@ task :drop_tables do
   puts 'dropping tables...'
   begin
     DB.drop_table :movies
-
     DB.drop_table :days
-
+    DB.drop_table :shows
     DB.drop_table :reservations
     puts 'tables dropped'
   rescue Sequel::DatabaseError => e

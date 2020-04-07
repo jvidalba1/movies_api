@@ -6,10 +6,10 @@ module MovieTransactions
   class Create < BaseTransaction
     tee :params
     step :create_movie
-    step :create_days
+    step :find_or_create_days
 
     def params(input)
-      @days = input.fetch(:params).delete(:days)
+      @days = input.fetch(:params).delete(:days).map(&:downcase)
       @params = input.fetch(:params)
     end
 
@@ -25,11 +25,12 @@ module MovieTransactions
       Failure(error: exception)
     end
 
-    def create_days
+    def find_or_create_days
       @days.each do |str_day|
-        day = Day.create(day: str_day)
+        day = Day.where(name: str_day).first || Day.create(name: str_day)
         @movie.add_day(day)
       end
+
       Success({ movie: @movie, days: @days })
     rescue StandardError => exception
       Failure(error: exception)

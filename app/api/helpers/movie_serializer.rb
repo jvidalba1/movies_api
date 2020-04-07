@@ -2,11 +2,11 @@ module MovieSerializer
   def serialize_list(data)
     data.map do |m|
       {
-        id: m.id,
-        name: m.name,
-        description: m.description,
-        image_url: m.image_url,
-        day: m[:day]
+        id: m[:movie_id],
+        title: m[:title],
+        description: m[:description],
+        image_url: m[:image_url],
+        day: m[:name]
       }
     end
   end
@@ -14,7 +14,7 @@ module MovieSerializer
   def serialize_movie(data)
     {
       id: data[:movie].id,
-      name: data[:movie].name,
+      title: data[:movie].title,
       description: data[:movie].description,
       image_url: data[:movie].image_url,
       days: data[:days]

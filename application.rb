@@ -9,7 +9,8 @@ module MoviesApi
     format :json
     prefix :api
 
-    mount MoviesApi::Ping
+    mount MoviesApi::Movie
+    mount MoviesApi::Reservation
 
     # Simple endpoint to get the current status of our API.
     get :status do
