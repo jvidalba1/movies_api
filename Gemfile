@@ -9,3 +9,6 @@ gem 'sqlite3'
 gem 'sequel'
 gem 'byebug'
 gem 'dry-transaction'
+
+gem 'rspec'
+gem 'rspec-expectations'
