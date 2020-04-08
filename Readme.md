@@ -121,28 +121,42 @@ Response:
 
 `GET /api/reservations`
 
-Params: `day` a day of the week.
+Params:
+  - start_date:String (mandatory)
+  - end_date:String (mandatory)
 
 Example:
 
-GET `localhost:9292/api/movies?day=friday`
+GET `localhost:9292/api/reservations?start_date=2020-04-05&end_date=2020-04-11`
 
 Response:
 ```
   [
-      {
-          "id": 1,
-          "title": "Rambo",
-          "description": "abc",
-          "image_url": "rambo 3",
-          "day": "friday"
-      },
-      {
-          "id": 2,
-          "title": "Avatar",
-          "description": "fiction",
-          "image_url": "avatar",
-          "day": "friday"
-      }
+    {
+        "id": 1,
+        "movie_name": "Avatar",
+        "movie_description": "fiction",
+        "reservation_date": "2020-04-10",
+        "day": "friday"
+    },
+    {
+        "id": 2,
+        "movie_name": "Rambo",
+        "movie_description": "abc",
+        "reservation_date": "2020-04-10",
+        "day": "friday"
+    },
+    {
+        "id": 3,
+        "movie_name": "Rambo",
+        "movie_description": "abc",
+        "reservation_date": "2020-04-06",
+        "day": "monday"
+    }
   ]
 ```
+
+
+### Heroku
+
+
