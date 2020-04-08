@@ -1,5 +1,19 @@
 require 'sequel'
 
+desc "Populate days table"
+task :populate_days do
+  DB = Sequel.connect('sqlite://db/movies.db')
+  puts 'populating days...'
+  begin
+    days = DB[:days]
+    week = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+    week.each { |day| days.insert(name: day) }
+    puts "tables created"
+  rescue Sequel::DatabaseError => e
+    puts e.message
+  end
+end
+
 desc "create all tables"
 task :create_tables do
   DB = Sequel.connect('sqlite://db/movies.db')
