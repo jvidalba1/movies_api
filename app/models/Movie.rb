@@ -1,5 +1,8 @@
+require_relative 'base.rb'
+
 class Movie < Sequel::Model
   extend Base
+
   one_to_many :shows
   many_to_many :days, join_table: :shows
 

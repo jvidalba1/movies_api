@@ -1,3 +1,5 @@
+require_relative 'base.rb'
+
 class Show < Sequel::Model
   extend Base
 

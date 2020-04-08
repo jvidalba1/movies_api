@@ -1,3 +1,5 @@
+require_relative 'base.rb'
+
 class Day < Sequel::Model
   extend Base
 

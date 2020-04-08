@@ -12,7 +12,7 @@ module ReservationTransactions
     end
 
     def get_reservations
-      @reservations = Reservation.where(date: (@star_date)..(@end_date)).all
+      @reservations = Reservation.by_date_range(@start_date, @end_date)
 
       Success(@reservations)
     rescue StandardError => exception
