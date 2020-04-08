@@ -7,6 +7,13 @@ describe MoviesApi::Root, "MoviesApi::Movie" do
     MoviesApi::Root
   end
 
+  let(:movie1) { Movie.create(title: "Test1", description: "drame") }
+  let(:movie2) { Movie.create(title: "Test2", description: "action") }
+  let(:movie3) { Movie.create(title: "Test3", description: "action") }
+
+  let(:monday) { Day.create(name: 'monday') }
+  let(:friday) { Day.create(name: 'friday') }
+
   after(:each) do
     Reservation.all.each { |r| r.delete }
     Show.all.each { |s| s.delete }
@@ -31,23 +38,16 @@ describe MoviesApi::Root, "MoviesApi::Movie" do
     end
 
     it 'returns all movies information given a day' do
-      @movie1 = Movie.create(title: "Test1", description: "drame")
-      @movie2 = Movie.create(title: "Test2", description: "action")
-      @movie3 = Movie.create(title: "Test3", description: "action")
-
-      @monday = Day.create(name: 'monday')
-      @friday = Day.create(name: 'friday')
-
-      @movie1.add_day(@monday)
-      @movie2.add_day(@friday)
-      @movie3.add_day(@friday)
+      movie1.add_day(monday)
+      movie2.add_day(friday)
+      movie3.add_day(friday)
 
       get '/api/movies?day=friday'
       expect(last_response.status).to eq 200
       expect(JSON.parse(last_response.body)).to eq(
         [
-          { "day"=>"friday", "description"=>@movie2.description, "id"=>@movie2.id, "image_url"=>@movie2.image_url, "title"=>@movie2.title },
-          { "day"=>"friday", "description"=>@movie3.description, "id"=>@movie3.id, "image_url"=>@movie3.image_url, "title"=>@movie3.title }
+          { "day"=>"friday", "description"=>movie2.description, "id"=>movie2.id, "image_url"=>movie2.image_url, "title"=>movie2.title },
+          { "day"=>"friday", "description"=>movie3.description, "id"=>movie3.id, "image_url"=>movie3.image_url, "title"=>movie3.title }
         ]
       )
     end

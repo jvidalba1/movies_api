@@ -1,5 +1,5 @@
 require_relative '../base_transaction.rb'
-\
+
 module MovieTransactions
   class Create < BaseTransaction
     tee :params

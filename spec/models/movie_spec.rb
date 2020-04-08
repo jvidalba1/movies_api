@@ -1,6 +1,17 @@
 require 'spec_helper'
 
 describe "Sequel::Movie" do
+  let!(:movie1) { Movie.create(title: "Test1", description: "drame") }
+  let!(:movie2) { Movie.create(title: "Test2", description: "action") }
+
+  let(:monday) { Day.create(name: 'monday') }
+  let(:tuesday) { Day.create(name: 'tuesday') }
+  let(:wednesday) { Day.create(name: 'wednesday') }
+  let(:thursday) { Day.create(name: 'thursday') }
+  let(:friday) { Day.create(name: 'friday') }
+  let(:saturday) { Day.create(name: 'saturday') }
+  let(:sunday) { Day.create(name: 'sunday') }
+
   after(:each) do
     Reservation.all.each { |r| r.delete }
     Show.all.each { |s| s.delete }
@@ -36,30 +47,17 @@ describe "Sequel::Movie" do
 
   describe "dataset" do
     it "returns all the movies in the database" do
-      movie1 = Movie.create(title: "Rambo 1", description: "test desc")
-      movie2 = Movie.create(title: "Rambo 2", description: "testing")
       expect(Movie.count).to eq(2)
       expect(Movie.all).to eq([movie1, movie2])
     end
 
     describe("#by_day") do
+
       before(:each) do
-        @movie1 = Movie.create(title: "Test1", description: "drame")
-        @movie2 = Movie.create(title: "Test2", description: "action")
-
-        @monday = Day.create(name: 'monday')
-        @tuesday = Day.create(name: 'tuesday')
-        @wednesday = Day.create(name: 'wednesday')
-        @thursday = Day.create(name: 'thursday')
-        @friday = Day.create(name: 'friday')
-        @saturday = Day.create(name: 'saturday')
-        @sunday = Day.create(name: 'sunday')
-
-        @movie1.add_day(@monday)
-        @movie1.add_day(@wednesday)
-
-        @movie2.add_day(@monday)
-        @movie2.add_day(@friday)
+        movie1.add_day(monday)
+        movie1.add_day(wednesday)
+        movie2.add_day(monday)
+        movie2.add_day(friday)
       end
 
       it "returns all the movies given a day of the week" do
@@ -68,8 +66,8 @@ describe "Sequel::Movie" do
         expect(Movie.by_day('monday').count).to eq(2)
         expect(mapped_movies).to eq(
           [
-            { movie_id: @movie1.id, title: @movie1.title },
-            { movie_id: @movie2.id, title: @movie2.title }
+            { movie_id: movie1.id, title: movie1.title },
+            { movie_id: movie2.id, title: movie2.title }
           ]
         )
       end

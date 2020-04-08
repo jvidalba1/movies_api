@@ -7,6 +7,27 @@ describe MoviesApi::Root, "MoviesApi::Reservation" do
     MoviesApi::Root
   end
 
+  let!(:movie) { Movie.create(title: "Avatar", description: "Fiction") }
+  let!(:movie2) { Movie.create(title: "Rambo", description: "Action") }
+
+  let!(:monday) { Day.create(name: 'monday') }
+  let!(:friday) { Day.create(name: 'friday') }
+
+  def set_reservations_for_index
+    movie.add_day(monday)
+    movie.add_day(friday)
+
+    movie2.add_day(monday)
+
+    show1 = Show.where(movie_id: movie.id, day_id: monday.id).first
+    show2 = Show.where(movie_id: movie.id, day_id: friday.id).first
+    show3 = Show.where(movie_id: movie2.id, day_id: monday.id).first
+
+    reservation1 = Reservation.create(date: Date.parse("2020-04-06"), show_id: show1.id)
+    reservation2 = Reservation.create(date: Date.parse("2020-04-10"), show_id: show2.id)
+    reservation3 = Reservation.create(date: Date.parse("2020-04-06"), show_id: show3.id)
+  end
+
   after(:each) do
     Reservation.all.each { |r| r.delete }
     Show.all.each { |s| s.delete }
@@ -26,25 +47,7 @@ describe MoviesApi::Root, "MoviesApi::Reservation" do
     end
 
     it 'returns HTTP status 200 and returns all reservations given a date range' do
-      movie = Movie.create(title: "Avatar", description: "Fiction")
-      movie2 = Movie.create(title: "Rambo", description: "Action")
-
-      monday = Day.create(name: 'monday')
-      friday = Day.create(name: 'friday')
-
-      movie.add_day(monday)
-      movie.add_day(friday)
-
-      movie2.add_day(monday)
-
-      show1 = Show.where(movie_id: movie.id, day_id: monday.id).first
-      show2 = Show.where(movie_id: movie.id, day_id: friday.id).first
-      show3 = Show.where(movie_id: movie2.id, day_id: monday.id).first
-
-      reservation1 = Reservation.create(date: Date.parse("2020-04-06"), show_id: show1.id)
-      reservation2 = Reservation.create(date: Date.parse("2020-04-10"), show_id: show2.id)
-      reservation3 = Reservation.create(date: Date.parse("2020-04-06"), show_id: show3.id)
-
+      set_reservations_for_index()
       get '/api/reservations?start_date=2020-04-05&end_date=2020-04-08'
       expect(last_response.status).to eq 200
       expect(JSON.parse(last_response.body).count).to eq 2
@@ -54,6 +57,10 @@ describe MoviesApi::Root, "MoviesApi::Reservation" do
   end
 
   describe 'POST /api/reservations' do
+    before(:each) do
+      movie.add_day(monday)
+    end
+
     it 'returns HTTP status 400 and returns params missing message' do
       post '/api/reservations'
       expect(last_response.status).to eq 400
@@ -61,19 +68,12 @@ describe MoviesApi::Root, "MoviesApi::Reservation" do
     end
 
     it 'returns HTTP status 400 and error for date sent' do
-      movie = Movie.create(title: "Avatar", description: "Fiction")
-      monday = Day.create(name: 'monday')
-      movie.add_day(monday)
-
       post '/api/reservations', date: "2020-04-10", movie_id: movie.id
       expect(last_response.status).to eq 400
       expect(JSON.parse(last_response.body)).to eq({"error"=>["The movie is presented on monday"]})
     end
 
     it 'returns HTTP status 200 and returns specific info for reservation created' do
-      movie = Movie.create(title: "Avatar", description: "Fiction")
-      monday = Day.create(name: 'monday')
-      movie.add_day(monday)
       show = Show.where(movie_id: movie.id, day_id: monday.id).first
 
       post '/api/reservations', date: "2020-04-06", movie_id: movie.id

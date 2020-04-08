@@ -2,21 +2,21 @@ require 'spec_helper'
 
 describe "Sequel::Reservation" do
 
+  let!(:movie) { Movie.create(title: "Avatar", description: "Fiction") }
+  let!(:movie2) { Movie.create(title: "Rambo", description: "Action") }
+
+  let!(:monday) { Day.create(name: 'monday') }
+  let!(:friday) { Day.create(name: 'friday') }
+
   before(:each) do
-    @movie = Movie.create(title: "Avatar", description: "Fiction")
-    @movie2 = Movie.create(title: "Rambo", description: "Action")
+    movie.add_day(monday)
+    movie.add_day(friday)
 
-    @monday = Day.create(name: 'monday')
-    @friday = Day.create(name: 'friday')
+    movie2.add_day(monday)
 
-    @movie.add_day(@monday)
-    @movie.add_day(@friday)
-
-    @movie2.add_day(@monday)
-
-    @show1 = Show.where(movie_id: @movie.id, day_id: @monday.id).first
-    @show2 = Show.where(movie_id: @movie.id, day_id: @friday.id).first
-    @show3 = Show.where(movie_id: @movie2.id, day_id: @monday.id).first
+    @show1 = Show.where(movie_id: movie.id, day_id: monday.id).first
+    @show2 = Show.where(movie_id: movie.id, day_id: friday.id).first
+    @show3 = Show.where(movie_id: movie2.id, day_id: monday.id).first
   end
 
   after(:each) do
