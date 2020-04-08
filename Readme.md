@@ -1,4 +1,4 @@
-#### Readme.md
+# Readme.md
 
 Please follow the next steps to setup the app:
 
@@ -18,9 +18,9 @@ Please follow the next steps to setup the tests:
 
 > List rake commands: `rake -T`
 
-### API Endpoints
+## API Endpoints
 
-## Movies
+### Movies
 
 `GET /api/movies`
 
@@ -90,7 +90,7 @@ Status: `201`
 ```
 
 
-## Reservations
+### Reservations
 
 `POST /api/reservations`
 
