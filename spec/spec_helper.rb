@@ -1,8 +1,17 @@
+ENV['RACK_ENV'] = 'test'
 
 require 'grape'
 require 'sequel'
 require 'dry-transaction'
 require 'byebug'
+require 'rack/test'
+
+require_relative '../application.rb'
+require_relative '../app/models/movie.rb'
+require_relative '../app/models/day.rb'
+require_relative '../app/models/base.rb'
+require_relative '../app/models/show.rb'
+require_relative '../app/models/reservation.rb'
 
 DB = Sequel.connect('sqlite://db/test_movies.db') # change the database if you are using sqlite etc.
 

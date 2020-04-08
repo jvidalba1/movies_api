@@ -1,3 +1,5 @@
+require_relative '../base_transaction.rb'
+
 module ReservationTransactions
   class Create < BaseTransaction
     tee :params
@@ -28,7 +30,7 @@ module ReservationTransactions
     def validate_day
       @day = Day.where(name: @day_str).first
 
-      if @day.movies.include?(@movie)
+      if @day && @day.movies.include?(@movie)
         Success(@movie)
       else
         raise ParamsError.new("The movie is presented on #{days_for_movie}")

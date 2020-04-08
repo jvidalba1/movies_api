@@ -7,7 +7,7 @@ module ReservationTransactions
 
     def params(input)
       params = input.fetch(:params)
-      @star_date = Date.parse(params[:start_date])
+      @start_date = Date.parse(params[:start_date])
       @end_date = Date.parse(params[:end_date])
     end
 

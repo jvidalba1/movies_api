@@ -8,6 +8,6 @@ class Day < Sequel::Model
 
   def validate
     super
-    errors.add(:name, "can't be empty") if name.blank?
+    errors.add(:name, "day can't be empty") if name.blank?
   end
 end

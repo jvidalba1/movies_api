@@ -7,10 +7,13 @@ module ReservationSerializer
   end
 
   def serialize_reservations(data)
-    data.map do |r|
+    data.map do |reservation|
       {
-        id: r.id,
-        date: r.date
+        id: reservation.id,
+        movie_name: reservation.show.movie.title,
+        movie_description: reservation.show.movie.description,
+        reservation_date: reservation.date,
+        day: reservation.show.day.name
       }
     end
   end

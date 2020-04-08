@@ -1,4 +1,6 @@
 require_relative 'helpers/movie_serializer.rb'
+require_relative '../transactions/movie_transactions/create.rb'
+require_relative '../transactions/movie_transactions/index.rb'
 
 module MoviesApi
   class Movie < Grape::API

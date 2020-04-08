@@ -1,8 +1,4 @@
 require 'spec_helper'
-require_relative '../../app/models/movie.rb'
-require_relative '../../app/models/day.rb'
-require_relative '../../app/models/base.rb'
-require_relative '../../app/models/show.rb'
 
 describe "Sequel::Day" do
   describe "Validations" do

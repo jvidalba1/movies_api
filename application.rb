@@ -15,6 +15,11 @@ module MoviesApi
 
     mount MoviesApi::Movie
     mount MoviesApi::Reservation
+
+
+    get '/status' do
+      { oelo: "oelo" }
+    end
   end
 end
 

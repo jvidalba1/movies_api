@@ -12,3 +12,4 @@ gem 'dry-transaction'
 
 gem 'rspec'
 gem 'rspec-expectations'
+gem 'rack-test'

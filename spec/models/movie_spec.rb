@@ -1,16 +1,11 @@
 require 'spec_helper'
-require_relative '../../app/models/movie.rb'
-require_relative '../../app/models/day.rb'
-require_relative '../../app/models/base.rb'
-require_relative '../../app/models/show.rb'
-require_relative '../../app/models/reservation.rb'
 
 describe "Sequel::Movie" do
   after(:each) do
-    Show.all.each { |m| m.delete }
+    Reservation.all.each { |r| r.delete }
+    Show.all.each { |s| s.delete }
     Movie.all.each { |m| m.delete }
-    Day.all.each { |m| m.delete }
-    Reservation.all.each { |m| m.delete }
+    Day.all.each { |d| d.delete }
   end
 
   describe "Validations" do
