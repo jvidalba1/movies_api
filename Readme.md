@@ -16,10 +16,11 @@ Please follow the next steps to setup the tests:
 3. Run: `rake create_test_tables` to create all the tables
 4. Run: `rspec` to run all specs
 
+> List rake commands: `rake -T`
 
-###API Endpoints
+### API Endpoints
 
-##Movies
+## Movies
 
 `GET /api/movies`
 
@@ -89,7 +90,7 @@ Status: `201`
 ```
 
 
-##Reservations
+## Reservations
 
 `POST /api/reservations`
 
