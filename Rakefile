@@ -2,7 +2,13 @@ require 'sequel'
 
 desc "Populate days table"
 task :populate_days do
-  DB = Sequel.connect('sqlite://db/movies.db')
+  # DB = Sequel.connect('sqlite://db/movies.db')
+  DB = Sequel.postgres('movies',
+       user:'postgres',
+       password: '',
+       host: 'localhost',
+       port: 5432,
+       max_connections: 10)
   puts 'populating days...'
   begin
     days = DB[:days]
@@ -16,7 +22,15 @@ end
 
 desc "create all tables"
 task :create_tables do
-  DB = Sequel.connect('sqlite://db/movies.db')
+  # DB = Sequel.connect('sqlite://db/movies.db')
+
+  DB = Sequel.postgres('movies',
+       user:'postgres',
+       password: '',
+       host: 'localhost',
+       port: 5432,
+       max_connections: 10)
+
   puts 'creating tables...'
   begin
     DB.create_table :movies do
@@ -50,7 +64,13 @@ end
 
 desc "drop all tables"
 task :drop_tables do
-  DB = Sequel.connect('sqlite://db/movies.db')
+  # DB = Sequel.connect('sqlite://db/movies.db')
+  DB = Sequel.postgres('movies',
+       user:'postgres',
+       password: '',
+       host: 'localhost',
+       port: 5432,
+       max_connections: 10)
   puts 'dropping tables...'
   begin
     DB.drop_table :movies
@@ -67,7 +87,13 @@ end
 
 desc "create all tables for database test"
 task :create_test_tables do
-  DB = Sequel.connect('sqlite://db/test_movies.db')
+  # DB = Sequel.connect('sqlite://db/test_movies.db')
+  DB = Sequel.postgres('movies',
+       user:'postgres',
+       password: '',
+       host: 'localhost',
+       port: 5432,
+       max_connections: 10)
   puts 'creating test tables...'
   begin
     DB.create_table :movies do
@@ -101,7 +127,13 @@ end
 
 desc "drop all test tables"
 task :drop_test_tables do
-  DB = Sequel.connect('sqlite://db/test_movies.db')
+  # DB = Sequel.connect('sqlite://db/test_movies.db')
+  DB = Sequel.postgres('movies',
+       user:'postgres',
+       password: '',
+       host: 'localhost',
+       port: 5432,
+       max_connections: 10)
   puts 'dropping test tables...'
   begin
     DB.drop_table :movies
