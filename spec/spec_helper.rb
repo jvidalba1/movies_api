@@ -13,7 +13,13 @@ require_relative '../app/models/base.rb'
 require_relative '../app/models/show.rb'
 require_relative '../app/models/reservation.rb'
 
-DB = Sequel.connect('sqlite://db/test_movies.db') # change the database if you are using sqlite etc.
+# DB = Sequel.connect('sqlite://db/test_movies.db') # change the database if you are using sqlite etc.
+DB = Sequel.postgres('movies',
+       user:'postgres',
+       password: '',
+       host: 'localhost',
+       port: 5432,
+       max_connections: 10)
 
 RSpec.configure do |config|
 
